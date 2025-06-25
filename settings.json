@@ -1,0 +1,76 @@
+{
+// 🎨 Tema claro moderno
+"workbench.colorTheme": "Default Light Modern",
+
+// ⚠️ Ignora verificação rígida de SSL (para corrigir problemas com extensões)
+"http.proxyStrictSSL": false,
+
+// 💾 Salvamento automático após 1 segundo de inatividade
+"files.autoSave": "afterDelay",
+"files.autoSaveDelay": 1000,
+
+// 🔁 Quebra automática de linha no editor
+"editor.wordWrap": "on",
+
+// 🔍 Zoom com Ctrl + Scroll do mouse
+"editor.mouseWheelZoom": true,
+
+// 📌 Retorna à posição do cursor ao reabrir arquivos
+"workbench.editor.restoreViewState": true,
+
+// 🔢 Mostrar números de linha
+"editor.lineNumbers": "on",
+
+// 🗺️ Ativar minimapa lateral de código
+"editor.minimap.enabled": true,
+
+// 🤖 Sugestões rápidas (autocomplete)
+"editor.quickSuggestions": {
+  "other": true,
+  "comments": false,
+  "strings": true
+},
+
+// 📦 Atualizar extensões automaticamente
+"extensions.autoUpdate": true,
+"extensions.autoCheckUpdates": true,
+
+// 💡 Sugerir a primeira opção no autocomplete
+"editor.suggestSelection": "first",
+
+// 🔚 Completar com TAB sugestões de código/snippets
+"editor.tabCompletion": "on",
+"editor.snippetSuggestions": "top",
+
+// 🧼 Formata o código automaticamente ao salvar ou colar
+"editor.formatOnSave": true,
+"editor.formatOnPaste": true,
+
+// 🚫 Ocultar arquivos/pastas irrelevantes no explorador
+"files.exclude": {
+  "**/.git": true,
+  "**/.DS_Store": true,
+  "**/node_modules": true
+},
+
+// 🔎 Ignorar essas pastas ao buscar
+"search.exclude": {
+  "**/node_modules": true,
+  "**/dist": true
+},
+
+// 🧭 Não abrir tela inicial ao abrir o VS Code
+"workbench.startupEditor": "none",
+
+// 🧱 Ativa navegação por caminho (breadcrumbs)
+"breadcrumbs.enabled": true,
+
+// 🧾 Impede que arquivos sejam abertos como preview (mais controle)
+"workbench.editor.enablePreview": false,
+
+// 🗑️ Remove aviso ao deletar arquivos
+"explorer.confirmDelete": false,
+
+// 🤖 Ativa sugestões inline do GitHub Copilot
+"github.copilot.inlineSuggest.enable": true
+}

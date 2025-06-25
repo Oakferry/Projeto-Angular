@@ -1,0 +1,27 @@
+<mat-form-field class="example-full-width">
+    <mat-label>Qual seu nome?</mat-label>
+    <input matInput 
+        placeholder="Fulano de Tal" 
+        [(ngModel)]="nome"
+    >
+</mat-form-field>
+
+<div *ngIf="nome.length>0">
+    Você digitou: {{nome}}
+</div>
+
+<button *ngIf="nome.length>0" mat-raised-button (click)="enviar()">
+    Enviar
+</button>
+
+<app-mycomponent></app-mycomponent>
+
+<second-comp>
+    <div class="border-1 p-4">
+        <div *ngFor="let item of lista">
+            <div>
+                Nome: {{item.nome}}, Idade: {{item.idade}} anos.
+            </div>
+        </div>
+    </div>
+</second-comp>
