@@ -32,6 +32,7 @@ export class FilmeService {
    */
   add(filme: Filme): void{
     this.filmes.push(filme);
+    this.salvarFilmesNoStorage(); // Salva os filmes no localStorage após adicionar
   }
 
   // Atualiza um filme existente na lista de filmes
@@ -39,12 +40,14 @@ export class FilmeService {
     const index = this.filmes.findIndex(f => f.id === filme.id);
     if(index !== -1) {
       this.filmes[index] = {...filme}; // Atualiza o filme no índice encontrado
+      this.salvarFilmesNoStorage();
     }
   }
 
   // Remove um filme da lista de filmes
   delete(id: string): void{
     this.filmes = this.filmes.filter(f => f.id !== id); // Filtra os filmes, removendo o com o ID especificado
+    this.salvarFilmesNoStorage(); // Salva os filmes no localStorage após remover
   }
 
   //Pega pelo id
@@ -53,8 +56,22 @@ export class FilmeService {
   }
 
 
+  /**
+    * Busca filmes pelo termo no título (case insensitive).
+    * @param termo - termo de busca
+    * @returns Array de filmes que contêm o termo no título
+    */
+  search(termo: string): Filme[] {
+    const lower = termo.toLowerCase();
+    return this.filmes.filter(filme => filme.titulo.toLowerCase().includes(lower));
+  }
 
-  constructor() {
-    
+  private salvarFilmesNoStorage() {
+    localStorage.setItem('filmes', JSON.stringify(this.filmes));
+  }// Carrega os filmes do localStorage ao iniciar o serviço
+
+  constructor() { 
+    const dados = localStorage.getItem('filmes');// Tenta obter os filmes do localStorage
+    this.filmes = dados ? JSON.parse(dados) : [];// Se houver dados, converte de JSON para objeto; caso contrário, inicializa como array vazio
   }
 }

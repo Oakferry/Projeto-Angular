@@ -1,1 +1,101 @@
-<p>filme-list works!</p>
+<div class="container mx-auto py-8">
+
+    <div class="flex justify-between items-center mb-6">
+        <h1 class="text-2xl font-bold">THE BEST MOVIES</h1>
+        <button mat-raised-button color="warn" (click)="logout()">
+            Sair
+        </button>
+    </div>
+
+    <div class="flex justify-between items-center mb-4">
+        <button mat-raised-button color="primary" (click)="toggleFormulario()" class="mb-4" *ngIf="!mostrarFormulario">
+            Adicionar Filme
+        </button>
+        <div class="flex justify-end mb-4">
+            <mat-form-field class="!w-85 !rounded-xl" style="border-radius: 1.5rem;">
+                <mat-label>Buscar filme</mat-label>
+                <input matInput [(ngModel)]="busca" placeholder="Buscar..." class="!rounded-xl" />
+            </mat-form-field>
+        </div>
+    </div>
+
+    <!-- Formulário de adicionar/editar filme -->
+    <form *ngIf="mostrarFormulario" (ngSubmit)="adicionarFilme()" #formRef="ngForm"
+        class="mb-8 flex flex-col md:flex-row gap-4 items-end">
+        <mat-form-field class="flex-1">
+            <mat-label>URL da Imagem</mat-label>
+            <input matInput name="imagem" [(ngModel)]="novoFilme.imagem" #imagem="ngModel">
+            <mat-error *ngIf="imagem.invalid && imagem.touched">URL inválida.</mat-error>
+        </mat-form-field>
+        <mat-form-field class="flex-1">
+            <mat-label>Título</mat-label>
+            <input matInput name="titulo" required minlength="2" [(ngModel)]="novoFilme.titulo" #titulo="ngModel">
+            <mat-error *ngIf="titulo.invalid && titulo.touched">
+                O título é obrigatório e deve ter pelo menos 2 caracteres.
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field class="flex-1">
+            <mat-label>Descrição</mat-label>
+            <input matInput name="descricao" required [(ngModel)]="novoFilme.descricao" #descricao="ngModel">
+            <mat-error *ngIf="descricao.invalid && descricao.touched">
+                A descrição é obrigatória.
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Status</mat-label>
+            <mat-select name="status" required [(ngModel)]="novoFilme.status" #status="ngModel">
+                <mat-option value="assistido">Assistido</mat-option>
+                <mat-option value="pendente">Pendente</mat-option>
+                <mat-option value="em andamento">Em andamento</mat-option>
+            </mat-select>
+            <mat-error *ngIf="status.invalid && status.touched">O status é obrigatório.</mat-error>
+        </mat-form-field>
+        <div class="flex gap-2">
+            <button mat-raised-button color="accent" type="submit" [disabled]="formRef.invalid">
+                {{ editando ? 'Salvar Edição' : 'Salvar' }}
+            </button>
+            <button mat-raised-button type="button" (click)="cancelarFormulario()" color="warn">
+                Cancelar
+            </button>
+        </div>
+    </form>
+
+    <!-- Filtro de status -->
+    <div class="mb-4 flex gap-2">
+        <button mat-button [color]="statusFilter === 'todos' ? 'primary' : ''"
+            (click)="onStatusChange('todos')">Todos</button>
+        <button mat-button [color]="statusFilter === 'assistido' ? 'primary' : ''"
+            (click)="onStatusChange('assistido')">Assistidos</button>
+        <button mat-button [color]="statusFilter === 'pendente' ? 'primary' : ''"
+            (click)="onStatusChange('pendente')">Pendentes</button>
+        <button mat-button [color]="statusFilter === 'em andamento' ? 'primary' : ''"
+            (click)="onStatusChange('em andamento')">Em andamento</button>
+    </div>
+
+    <div *ngIf="filmesFiltrados.length === 0" class="text-center text-gray-600">
+        Nenhum filme encontrado.
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <mat-card *ngFor="let filme of filmesFiltrados" (click)="abrirDetalhe(filme)"
+            class="cursor-pointer hover:shadow-2xl transition">
+            <img *ngIf="filme.imagem" [src]="filme.imagem" [alt]="filme.titulo"
+                class="w-full h-52 object-cover object-center mb-2 rounded-t">
+            <mat-card-header>
+                <mat-card-title>{{ filme.titulo }}</mat-card-title>
+                <mat-card-subtitle class="m-4">{{ filme.status }}</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+                <p>{{ filme.descricao }}</p>
+            </mat-card-content>
+            <mat-card-actions>
+                <button mat-icon-button color="primary" (click)="$event.stopPropagation(); editarFilme(filme)">
+                    <mat-icon >edit</mat-icon>
+                </button>
+                <button mat-icon-button color="warn" (click)="$event.stopPropagation(); removerFilme(filme.id)">
+                    <mat-icon>delete</mat-icon>
+                </button>
+            </mat-card-actions>
+        </mat-card>
+    </div>
+</div>

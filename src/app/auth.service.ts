@@ -15,7 +15,7 @@ export class AuthService {
   login (username: string, password:string): boolean{
     if(username === this.USERNAME && password === this.PASSWORD){
       this.isAuthenticated = true;// Set authentication status
-      this.router.navigate(['/']);// Redirect to home page
+      this.router.navigate(['/filmes']); // Redirect to filmes page
       return true;// Valid credentials
     }
     this.isAuthenticated = false;

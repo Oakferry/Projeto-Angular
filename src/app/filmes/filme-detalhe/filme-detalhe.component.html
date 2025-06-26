@@ -1,0 +1,26 @@
+<h2 mat-dialog-title>{{ data.titulo }}</h2>
+<mat-dialog-content>
+    <img *ngIf="data.imagem" [src]="data.imagem" [alt]="data.titulo"
+        class="w-full h-80 object-cover mb-4 rounded-xl shadow" />
+    <div class="mb-2">
+        <strong>Status:</strong> {{ data.status | titlecase }}
+    </div>
+    <div class="mb-4">
+        <strong>Descrição:</strong>
+        <p>{{ data.descricao }}</p>
+    </div>
+    <!-- Avaliação em estrelas -->
+    <div class="mb-4 flex items-center gap-2">
+        <span class="font-medium">Avaliação:</span>
+        <ng-container *ngFor="let star of [1,2,3,4,5]">
+            <mat-icon (click)="setAvaliacao(star)" [class.text-yellow-500]="avaliacao >= star" class="cursor-pointer">{{
+                avaliacao >= star ? 'star' : 'star_border' }}</mat-icon>
+        </ng-container>
+        <span class="ml-2 text-sm">({{ avaliacao }} / 5)</span>
+    </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-raised-button color="primary" (click)="editar()" class="p-2">Editar</button>
+    <button mat-raised-button color="warn" (click)="remover()" class="p-2">Remover</button>
+    <button mat-button (click)="fechar()" class="p-2">Fechar</button>
+</mat-dialog-actions>
